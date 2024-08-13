@@ -8,8 +8,8 @@
 #include <unistd.h>
 
 #include <sys/syscall.h>
-#include <sys/types.h>
 #include <sys/sysinfo.h>
+#include <sys/types.h>
 #include <sys/utsname.h>
 
 #include <linux/kernel.h>
@@ -91,20 +91,31 @@ int main()
     }
 
     {
-        FILE* fp = fopen("/sys/devices/virtual/dmi/id/product_family", "r");
 
-        assert(fp);
+        FILE* fp0 = fopen("/sys/devices/virtual/dmi/id/product_name", "r");
 
+        assert(fp0);
         int c;
         int i = 0;
-        while ((c = getc(fp)) != EOF && c != '\n') {
+
+        while ((c = getc(fp0)) != EOF && c != '\n') {
             char* ptr = &buf[IDX(2)] + i;
-            assert(ptr < &buf[IDX(2)] - 1);
+            assert(ptr < &buf[IDX(3)] - 1);
             *ptr = c;
             i++;
         }
+        fclose(fp0);
 
-        fclose(fp);
+        FILE* fp1 = fopen("/sys/devices/virtual/dmi/id/product_family", "r");
+        i++;
+
+        while ((c = getc(fp1)) != EOF && c != '\n') {
+            char* ptr = &buf[IDX(2)] + i;
+            assert(ptr < &buf[IDX(3)] - 1);
+            *ptr = c;
+            i++;
+        }
+        fclose(fp1);
     }
 
     {
