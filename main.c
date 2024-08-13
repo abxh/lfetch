@@ -143,6 +143,7 @@ int main()
                 mem_sreclaimable = value;
             }
         }
+        fclose(fp);
 
         struct sysinfo s_info;
         const int error_code = sysinfo(&s_info);
