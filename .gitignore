@@ -1,0 +1,6 @@
+*.out
+*.o
+*.bin
+bin/
+html/
+latex/
