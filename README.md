@@ -1,3 +1,5 @@
 # lfetch
 
-Made for educational purposes.
+Compatible for linux.
+
+Made for educational purposes. Is not made to be foolproof nor portable.
