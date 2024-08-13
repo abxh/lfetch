@@ -73,22 +73,21 @@ int main()
 
         assert(fp);
 
-        int c;
-        while ((c = getc(fp)) != EOF && c != '\n')
-            continue;
-        while ((c = getc(fp)) != EOF && c != '\n')
-            continue;
-        while ((c = getc(fp)) != EOF && c != '"')
-            continue;
+        char line[128];
+        while (true) {
+            if (fgets(line, 128, fp) == NULL) {
+                break;
+            }
+            if (strncmp(line, "PRETTY_NAME=", sizeof("PRETTY_NAME=") - 1) == 0) {
+                char* ptr = &line[sizeof("PRETTY_NAME=\"") - 1];
 
-        int i = 0;
-        while ((c = getc(fp)) != EOF && c != '"') {
-            char* ptr = &buf[IDX(1)] + i;
-            assert(ptr < &buf[IDX(2)] - 1);
-            *ptr = c;
-            i++;
+                ptr[strlen(ptr) - 2] = '\0';
+
+                strcpy(&buf[IDX(1)], ptr);
+
+                break;
+            }
         }
-
         fclose(fp);
     }
 
