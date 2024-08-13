@@ -124,7 +124,7 @@ int main()
 
         while (true) {
             int res = fscanf(fp, "%s %lld", param_name, &value);
-            if (res == EOF) {
+            if (res == EOF || (mem_cached != 0 && mem_sreclaimable != 0)) {
                 break;
             }
             if (strcmp(param_name, "Cached:") == 0) {
